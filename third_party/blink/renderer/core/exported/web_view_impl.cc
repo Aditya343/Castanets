@@ -3512,6 +3512,21 @@ int32_t WebViewImpl::AutoplayFlagsForTest() {
   return AsView().page->AutoplayFlags();
 }
 
+#if defined(VIDEO_HOLE)
+void WebViewImpl::SetVideoHoleForRender(bool enable) {
+  if (!GetPage())
+    return;
+
+  GetPage()->GetSettings().SetVideoHoleEnabled(enable);
+}
+
+bool WebViewImpl::IsVideoHoleForRender() const {
+  if (!GetPage())
+    return false;
+  return GetPage()->GetSettings().GetVideoHoleEnabled();
+}
+#endif
+
 void WebViewImpl::DeferMainFrameUpdateForTesting() {
   scoped_defer_main_frame_update_ = layer_tree_view_->DeferMainFrameUpdate();
 }

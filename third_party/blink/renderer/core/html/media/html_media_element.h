@@ -330,6 +330,10 @@ class CORE_EXPORT HTMLMediaElement
 
   void SetCcLayerForTesting(cc::Layer* layer) { SetCcLayer(layer); }
 
+ #if defined(CASTANETS)
+   WebString GetContentMIMEType() override;
+ #endif
+
  protected:
   HTMLMediaElement(const QualifiedName&, Document&);
   ~HTMLMediaElement() override;
@@ -571,6 +575,10 @@ class CORE_EXPORT HTMLMediaElement
   ReadyState ready_state_maximum_;
   KURL current_src_;
   Member<MediaStreamDescriptor> src_object_;
+
+#if defined(CASTANETS)
+  String content_mime_type_;
+#endif
 
   Member<MediaError> error_;
 

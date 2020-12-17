@@ -271,7 +271,8 @@ class ObserverList {
       NOTREACHED() << "Observers can only be added once!";
       return;
     }
-    observers_.emplace_back(ObserverStorageType(obs));
+    observers_.emplace_back(obs);
+    //observers_.push_back(obs);
   }
 
   // Removes the given observer from this list. Does nothing if this observer is

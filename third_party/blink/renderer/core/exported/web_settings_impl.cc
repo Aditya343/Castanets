@@ -755,6 +755,13 @@ void WebSettingsImpl::SetPreferredColorScheme(
   settings_->SetPreferredColorScheme(color_scheme);
 }
 
+
+#if defined(VIDEO_HOLE)
+void WebSettingsImpl::SetVideoHoleEnabled(bool enabled) {
+  settings_->SetVideoHoleEnabled(enabled);
+}
+#endif
+
 STATIC_ASSERT_ENUM(WebSettings::ImageAnimationPolicy::kAllowed,
                    kImageAnimationPolicyAllowed);
 STATIC_ASSERT_ENUM(WebSettings::ImageAnimationPolicy::kAnimateOnce,

@@ -373,8 +373,8 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
 
   // Helpers that set the network/ready state and notifies the client if
   // they've changed.
-  void SetNetworkState(blink::WebMediaPlayer::NetworkState state);
-  void SetReadyState(blink::WebMediaPlayer::ReadyState state);
+  void SetNetworkState(blink::WebMediaPlayer::NetworkState state) override;
+  void SetReadyState(blink::WebMediaPlayer::ReadyState state) override;
 
   // Returns the current video frame from |compositor_|, and asks the compositor
   // to update its frame if it is stale.

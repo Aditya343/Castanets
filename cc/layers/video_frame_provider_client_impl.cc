@@ -90,6 +90,16 @@ void VideoFrameProviderClientImpl::PutCurrentFrame() {
   needs_put_current_frame_ = false;
 }
 
+#if defined(VIDEO_HOLE)
+void VideoFrameProviderClientImpl::OnDrawableContentRectChanged(
+    const gfx::Rect rect) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+
+  if (provider_)
+    provider_->OnDrawableContentRectChanged(rect);
+}
+#endif
+
 void VideoFrameProviderClientImpl::ReleaseLock() {
   DCHECK(thread_checker_.CalledOnValidThread());
   provider_lock_.AssertAcquired();

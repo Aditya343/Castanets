@@ -1030,5 +1030,9 @@
       name: "DontSendKeyEventsToJavascript",
       initial: false,
     },
+    {
+      name: "videoHoleEnabled",
+      initial: false,
+    },
   ],
 }

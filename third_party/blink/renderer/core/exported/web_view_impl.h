@@ -409,6 +409,11 @@ class CORE_EXPORT WebViewImpl final : public WebView,
   void StartDeferringCommits(base::TimeDelta timeout);
   void StopDeferringCommits(PaintHoldingCommitTrigger);
 
+#if defined(VIDEO_HOLE)
+  void SetVideoHoleForRender(bool enable) override;
+  bool IsVideoHoleForRender() const override;
+#endif
+
  private:
   FRIEND_TEST_ALL_PREFIXES(WebFrameTest, DivScrollIntoEditableTest);
   FRIEND_TEST_ALL_PREFIXES(WebFrameTest,

@@ -102,6 +102,13 @@ class CONTENT_EXPORT WebMediaPlayerMSCompositor
   bool HasCurrentFrame() override;
   scoped_refptr<media::VideoFrame> GetCurrentFrame() override;
   void PutCurrentFrame() override;
+
+#if defined(VIDEO_HOLE)
+  void SetDrawableContentRectChangedCallback(
+      cc::DrawableContentRectChangedCallback) override {}
+  void OnDrawableContentRectChanged(const gfx::Rect&) override {}
+#endif
+
   base::TimeDelta GetPreferredRenderInterval() override;
 
   void StartRendering();

@@ -290,6 +290,10 @@ class WebSettings {
   virtual void SetForceDarkModeEnabled(bool) = 0;
   virtual void SetPreferredColorScheme(PreferredColorScheme) = 0;
 
+#if defined(VIDEO_HOLE)
+  virtual void SetVideoHoleEnabled(bool) = 0;
+#endif
+
  protected:
   ~WebSettings() = default;
 };

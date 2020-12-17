@@ -62,6 +62,10 @@ namespace content {
 class RenderFrameImpl;
 class MediaInterfaceFactory;
 
+#if defined(CASTANETS)
+class CastanetsRendererMediaPlayerManager;
+#endif
+
 // Assist to RenderFrameImpl in creating various media clients.
 class MediaFactory {
  public:
@@ -108,7 +112,12 @@ class MediaFactory {
       blink::WebContentDecryptionModule* initial_cdm,
       const blink::WebString& sink_id,
       blink::WebLayerTreeView* layer_tree_view,
-      const cc::LayerTreeSettings& settings);
+      const cc::LayerTreeSettings& settings
+#if defined(VIDEO_HOLE)
+      ,
+      bool video_hole
+#endif
+      );
 
   // Provides an EncryptedMediaClient to connect blink's EME layer to media's
   // implementation of requestMediaKeySystemAccess. Will always return the same
@@ -143,6 +152,10 @@ class MediaFactory {
 
   media::DecoderFactory* GetDecoderFactory();
 
+#if defined(CASTANETS)
+  CastanetsRendererMediaPlayerManager* GetCastanetsMediaPlayerManager();
+#endif
+
 #if BUILDFLAG(ENABLE_MEDIA_REMOTING)
   media::mojom::RemoterFactory* GetRemoterFactory();
 #endif
@@ -167,6 +180,10 @@ class MediaFactory {
   // Lifetime matches that of the owning |render_frame_|. Will always be valid
   // once assigned.
   service_manager::InterfaceProvider* remote_interfaces_ = nullptr;
+
+#if defined(CASTANETS)
+  CastanetsRendererMediaPlayerManager* castanets_media_player_manager_ = nullptr;
+#endif
 
   // Manages play, pause notifications for WebMediaPlayer implementations; its
   // lifetime is tied to the RenderFrame via the RenderFrameObserver interface.

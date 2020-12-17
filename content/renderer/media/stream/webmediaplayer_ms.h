@@ -255,8 +255,8 @@ class CONTENT_EXPORT WebMediaPlayerMS
 
   // Helpers that set the network/ready state and notifies the client if
   // they've changed.
-  void SetNetworkState(blink::WebMediaPlayer::NetworkState state);
-  void SetReadyState(blink::WebMediaPlayer::ReadyState state);
+  void SetNetworkState(blink::WebMediaPlayer::NetworkState state) override;
+  void SetReadyState(blink::WebMediaPlayer::ReadyState state) override;
 
   // Getter method to |client_|.
   blink::WebMediaPlayerClient* get_client() { return client_; }

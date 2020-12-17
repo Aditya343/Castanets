@@ -102,3 +102,12 @@
 #error "Failed to include content/common/gin_java_bridge_messages.h"
 #endif
 #endif  // defined(OS_ANDROID)
+
+#if defined(CASTANETS)
+#undef CONTENT_COMMON_MEDIA_CASTANETS_MEDIA_PLAYER_MESSAGES_H_
+#include "content/common/media/castanets_media_player_messages.h"
+#ifndef CONTENT_COMMON_MEDIA_CASTANETS_MEDIA_PLAYER_MESSAGES_H_
+#error \
+    "Failed to include content/common/media/castanets_media_player_messages.h"
+#endif
+#endif

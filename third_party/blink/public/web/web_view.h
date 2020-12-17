@@ -491,6 +491,11 @@ class WebView {
   // Informs the page that it is inside a portal.
   virtual void SetInsidePortal(bool inside_portal) = 0;
 
+#if defined(VIDEO_HOLE)
+  virtual void SetVideoHoleForRender(bool enable) = 0;
+  virtual bool IsVideoHoleForRender() const = 0;
+#endif
+
  protected:
   ~WebView() = default;
 };

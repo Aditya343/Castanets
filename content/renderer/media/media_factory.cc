@@ -83,6 +83,12 @@
 #include "media/remoting/renderer_controller.h"         // nogncheck
 #endif
 
+#if defined(CASTANETS)
+#include "base/base_switches.h"
+#include "content/renderer/media/castanets/castanets_renderer_media_player_manager.h"
+#include "content/renderer/media/castanets/castanets_webmediaplayer_impl.h"
+#endif
+
 namespace {
 class FrameFetchContext : public media::ResourceFetchContext {
  public:
@@ -265,7 +271,13 @@ blink::WebMediaPlayer* MediaFactory::CreateMediaPlayer(
     blink::WebContentDecryptionModule* initial_cdm,
     const blink::WebString& sink_id,
     blink::WebLayerTreeView* layer_tree_view,
-    const cc::LayerTreeSettings& settings) {
+    const cc::LayerTreeSettings& settings
+#if defined(VIDEO_HOLE)
+    ,
+    bool is_video_hole
+#endif
+    ) {
+  LOG(INFO) << __FUNCTION__;
   blink::WebLocalFrame* web_frame = render_frame_->GetWebFrame();
   blink::WebSecurityOrigin security_origin =
       render_frame_->GetWebFrame()->GetSecurityOrigin();
@@ -387,6 +399,19 @@ blink::WebMediaPlayer* MediaFactory::CreateMediaPlayer(
   std::unique_ptr<media::VideoFrameCompositor> vfc =
       std::make_unique<media::VideoFrameCompositor>(
           params->video_frame_compositor_task_runner(), std::move(submitter));
+
+#if defined(CASTANETS) && defined(VIDEO_HOLE)
+  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kEnableForking) &&
+      is_video_hole) {
+    LOG(INFO) << __FUNCTION__;
+    WebMediaPlayerCastanets* player = new WebMediaPlayerCastanets(
+        web_frame, client, encrypted_client, GetWebMediaPlayerDelegate(),
+        url_index_.get(), std::move(vfc), std::move(params));
+    player->SetMediaPlayerManager(GetCastanetsMediaPlayerManager());
+    return player;
+  }
+#endif
 
   media::WebMediaPlayerImpl* media_player = new media::WebMediaPlayerImpl(
       web_frame, client, encrypted_client, GetWebMediaPlayerDelegate(),
@@ -582,6 +607,17 @@ media::DecoderFactory* MediaFactory::GetDecoderFactory() {
 
   return decoder_factory_.get();
 }
+
+#if defined(CASTANETS)
+CastanetsRendererMediaPlayerManager*
+MediaFactory::GetCastanetsMediaPlayerManager() {
+  LOG(INFO) << __FUNCTION__;
+  if (!castanets_media_player_manager_)
+    castanets_media_player_manager_ =
+        new CastanetsRendererMediaPlayerManager(render_frame_);
+  return castanets_media_player_manager_;
+}
+#endif
 
 #if BUILDFLAG(ENABLE_MEDIA_REMOTING)
 media::mojom::RemoterFactory* MediaFactory::GetRemoterFactory() {

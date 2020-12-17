@@ -3526,6 +3526,16 @@ void RenderWidget::UnregisterBrowserPlugin(BrowserPlugin* browser_plugin) {
   browser_plugins_.RemoveObserver(browser_plugin);
 }
 
+#if defined(VIDEO_HOLE)
+void RenderWidget::RegisterVideoHoleFrame(RenderFrameImpl* frame) {
+  video_hole_frames_.AddObserver(frame);
+}
+
+void RenderWidget::UnregisterVideoHoleFrame(RenderFrameImpl* frame) {
+  video_hole_frames_.RemoveObserver(frame);
+}
+#endif
+
 void RenderWidget::OnWaitNextFrameForTests(
     int main_frame_thread_observer_routing_id) {
   // Sends an ACK to the browser process during the next compositor frame.

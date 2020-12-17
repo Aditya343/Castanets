@@ -189,7 +189,8 @@ struct CONTENT_EXPORT WebPreferences {
 
 #if defined(CASTANETS)
   bool use_native_scrollbars = false;
-
+#endif
+#if defined(VIDEO_HOLE)
   bool video_hole_enabled = false;
 
   bool atk_enabled = false;

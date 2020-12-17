@@ -346,5 +346,16 @@ bool VideoFrameCompositor::CallRender(base::TimeTicks deadline_min,
   return new_frame || had_new_background_frame;
 }
 
+#if defined(VIDEO_HOLE)
+void VideoFrameCompositor::SetDrawableContentRectChangedCallback(
+    cc::DrawableContentRectChangedCallback cb) {
+  drawable_content_rect_changed_cb_ = std::move(cb);
+}
+
+void VideoFrameCompositor::OnDrawableContentRectChanged(const gfx::Rect& rect) {
+  if (!drawable_content_rect_changed_cb_.is_null())
+    drawable_content_rect_changed_cb_.Run(rect, true);
+}
+#endif
 
 }  // namespace media

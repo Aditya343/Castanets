@@ -138,6 +138,8 @@ const char kEnableThreadInstructionCount[] = "enable-thread-instruction-count";
 
 #if defined(CASTANETS)
 // Enable features for distributed chromium.
+const char kEnableForking[] = "enable-forking";
+
 const char kEnableCastanets[] = "enable-castanets";
 
 const char kTcpLaunchTimeout[] = "tcp-launch-timeout";

@@ -214,6 +214,10 @@ class CORE_EXPORT WebSettingsImpl final : public WebSettings {
   void SetLazyImageLoadingDistanceThresholdPx3G(int) override;
   void SetLazyImageLoadingDistanceThresholdPx4G(int) override;
 
+#if defined(VIDEO_HOLE)
+  void SetVideoHoleEnabled(bool) override;
+#endif
+
   void SetForceDarkModeEnabled(bool) override;
   void SetPreferredColorScheme(PreferredColorScheme) override;
 

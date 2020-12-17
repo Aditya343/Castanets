@@ -52,11 +52,14 @@ enum class VideoFrameResourceType {
   RGB,
   RGBA_PREMULTIPLIED,
   RGBA,
+#if defined(VIDEO_HOLE)
+  HOLE,
+#endif
   STREAM_TEXTURE,
   // The VideoFrame is merely a hint to compositor that a hole must be made
   // transparent so the video underlay will be visible.
   // Used by Chromecast only.
-  VIDEO_HOLE,
+  VIDEO_HOLE1,
 };
 
 class MEDIA_EXPORT VideoFrameExternalResources {

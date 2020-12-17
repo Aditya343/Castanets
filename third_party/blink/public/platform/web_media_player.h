@@ -164,6 +164,22 @@ class WebMediaPlayer {
   virtual WebTimeRanges Buffered() const = 0;
   virtual WebTimeRanges Seekable() const = 0;
 
+  virtual void RequestPause() {}
+  virtual void OnPlayerDestroyed() {}
+  virtual void OnMediaDataChange(int, int, int) {}
+  virtual void OnDurationChanged(base::TimeDelta) {}
+  virtual void OnTimeUpdate(base::TimeDelta) {}
+  virtual void OnBufferUpdate(int) {}
+  virtual void OnTimeChanged() {}
+  virtual void OnPauseStateChange(bool) {}
+  virtual void OnSeekComplete() {}
+  virtual void OnRequestSeek(base::TimeDelta) {}
+  virtual void OnPlayerSuspend(bool) {}
+  virtual void OnPlayerResumed(bool) {}
+
+  virtual void SetReadyState(WebMediaPlayer::ReadyState) {}
+  virtual void SetNetworkState(WebMediaPlayer::NetworkState) {}
+
   // Attempts to switch the audio output device.
   virtual void SetSinkId(const WebString& sing_id,
                          WebSetSinkIdCompleteCallback) = 0;

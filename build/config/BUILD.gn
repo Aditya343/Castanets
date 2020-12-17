@@ -137,6 +137,7 @@ config("feature_flags") {
   }
   if (enable_castanets) {
     defines += [ "CASTANETS" ]
+    defines += [ "VIDEO_HOLE" ]
   }
   if (enable_service_offloading) {
     defines += [ "SERVICE_OFFLOADING" ]

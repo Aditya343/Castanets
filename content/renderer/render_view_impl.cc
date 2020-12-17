@@ -1003,6 +1003,11 @@ void RenderView::ApplyWebPreferences(const WebPreferences& prefs,
     NOTREACHED();
   }
 
+
+#if defined(VIDEO_HOLE)
+  settings->SetVideoHoleEnabled(prefs.video_hole_enabled);
+#endif
+
 #if defined(OS_MACOSX)
   web_view->SetMaximumLegibleScale(prefs.default_maximum_page_scale_factor);
 #endif
